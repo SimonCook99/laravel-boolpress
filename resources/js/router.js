@@ -11,6 +11,8 @@ import Home from "./pages/Home";
 import About from "./pages/About.vue";
 import Contact from "./pages/Contact.vue";
 import Posts from "./pages/Posts.vue";
+import SinglePost from "./pages/SinglePost.vue";
+
 
 
 
@@ -37,6 +39,11 @@ const router = new VueRouter({
             path: "/posts",
             name: "posts",
             component: Posts
+        },
+        {
+            path: '/posts/:slug', //equivale a Laravel: Route::get('/posts/{slug}', 'Api\PostController@show');
+            name: 'single-post',
+            component: SinglePost
         },
     ]
 });

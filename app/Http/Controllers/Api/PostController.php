@@ -36,4 +36,26 @@ class PostController extends Controller
             ]
         );
     }
+
+    //funzione in frontend per mostrare i dettagli di un singolo post
+    public function show($slug){
+
+        $post = Post::where('slug', '=', $slug)->with(['category', 'tags'])->first();
+
+        if ($post) {
+            return response()->json(
+                [
+                    'result' => $post,
+                    'success' => true
+                ]
+            );
+        } else {
+            return response()->json(
+                [
+                    'result' => 'Nessun risultato trovato',
+                    'success' => false
+                ]
+            );
+        }
+    }
 }
