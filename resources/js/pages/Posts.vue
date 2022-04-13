@@ -15,11 +15,8 @@
                     <p class="card-text">{{post.content}}</p>
 
                     <!-- <button type="button" class="btn btn-outline-success">{{post.category.name}}</button> -->
-                    
-                    <a href="#" class="btn btn-primary">Mostra dettagli post</a>
 
-                    <!--BOZZA PER ROUTER-LINK PER DETTAGLI POST, BISOGNA PASSARE LO SLUG DEL SINGOLO POST ALL'INTERNO DI :to -->
-                    <!-- <router-link class="btn btn-primary" :to="{name: 'single-post' path: post.slug}">Mostra dettagli post</router-link> -->
+                    <router-link class="btn btn-primary" :to="{name: 'single-post', params: {slug: post.slug}}">Mostra dettagli post</router-link>
 
                 </div>
             </div>
