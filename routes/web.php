@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::middleware("auth") //controllo di autenticazione gestito direttamente qui
-    ->namespace("Admin") //le rotte inserite faranno parte del amespace "Admin" (Ossia la cartella di HomeController)
+    ->namespace("Admin") //le rotte inserite faranno parte del namespace "Admin" (Ossia la cartella di HomeController)
     ->name("admin.") //Il nome delle rotte inserite, inizierà con "admin." (come in questo caso admin.home)
     ->prefix("admin") //gli URL delle rotte inserite, inizieranno col prefisso "admin" (come in questo caso admin/home)
     ->group(function(){
