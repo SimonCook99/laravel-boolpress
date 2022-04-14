@@ -22,9 +22,8 @@ class PostController extends Controller
         //aggiungo le informazioni della categoria associata al post, 
         //chiamando la funzione "category" del Model "Post.php" nelle parentesi quadre
         
-        $posts = Post::with(["category"])->get();
+        $posts = Post::with(["category", "tags"])->paginate(2);
 
-        $posts = Post::paginate(2);
 
 
         //ritorno la risposta, in forma di json cos' da poterla usare all'interno del programma con axios

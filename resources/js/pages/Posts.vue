@@ -10,15 +10,13 @@
         <!--contenitore delle card, che sarò ripetuto per ogni post-->
         <div class="row">
             <div class="card d-flex col-4" v-for="post in posts" :key="post.id" style="width: 18rem;">
-                <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">{{post.title}}</h5>
-                    <p class="card-text">{{post.content}}</p>
-
-                    <!-- <button type="button" class="btn btn-outline-success">{{post.category.name}}</button> -->
-
-                    <router-link class="btn btn-primary" :to="{name: 'single-post', params: {slug: post.slug}}">Mostra dettagli post</router-link>
-
-                </div>
+                <Post
+                    :title="post.title"
+                    :content="post.content"
+                    :slug="post.slug"
+                    :category="post.category"
+                    :tags="post.tags"
+                />
             </div>
         </div>
 
@@ -38,8 +36,13 @@
 </template>
 
 <script>
+    import Post from "./Post";
+
     export default {
         name : "Posts",
+        components:{
+            Post
+        },
 
         data(){
             return{
