@@ -2,6 +2,7 @@
 
     <div class="card-body d-flex flex-column">
         <h5 class="card-title">{{title}}</h5>
+        <img class="img-fluid" :src="img" :alt="title">
         <p class="card-text">{{ truncateText(content)}}</p>
 
         <!--&nbsp serve a mantenere lo spazio dell'elemento anche qualora non fosse presente-->
@@ -17,7 +18,7 @@
 <script>
     export default {
         name: "Post",
-        props: ["title", "content", "slug", "category", "tags"],
+        props: ["title", "content", "slug", "category", "tags", "img"],
         data(){
             return{
                 lunghezzaContent: 40

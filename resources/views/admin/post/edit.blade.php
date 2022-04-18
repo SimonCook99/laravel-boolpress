@@ -6,9 +6,23 @@
     <div class="container">
       <h1>Modifica post</h1>
 
-      <form method="POST" action="{{route("admin.posts.update", $post->id)}}">
+      <form method="POST" action="{{route("admin.posts.update", $post->id)}}" enctype="multipart/form-data">
         @csrf
         @method("PUT")
+
+
+        @if ($post->cover)
+          <p>Immagine attualmente presente:</p>
+          <img class="img-thumbnail" src="{{asset('storage/' . $post->cover)}}" alt="{{$post->title}}">
+        @endif
+
+
+        <div class="form-group">
+          <label for="image">Modifica immagine di copertina</label>
+
+          <!--l'attributo name in questo caso specifico non ha diretto colegamento con l'attributo cover del database, quindi usiamo un nome diverso-->
+          <input class="form-control" type="file" id="image" name="image"> 
+        </div>
 
         <div class="form-group">
           <label for="title">Titolo post</label>

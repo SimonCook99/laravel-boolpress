@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('FILESYSTEM_DRIVER', 'local'),
+    'default' => env('FILESYSTEM_DRIVER', 'public'), //cambiamo il secondo parametro da 'local' a 'public' per l'upload delle immagini
 
     /*
     |--------------------------------------------------------------------------

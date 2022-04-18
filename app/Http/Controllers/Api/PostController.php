@@ -25,6 +25,18 @@ class PostController extends Controller
         $posts = Post::with(["category", "tags"])->paginate(2);
 
 
+        //rapida versione di un ciclo foreach
+        $posts->each(function ($post){
+
+            //la funzione url ci permette di ricavare l'url assoluto dell'immagine, per poterla usare nel frontendù
+            //la funzione url punta alla cartella public del progetto, esattamente come la funzione 'asset' in blade
+            if($post->cover){ 
+                $post->cover = url("storage/" . $post->cover);
+            }else{
+                $post->cover = url("img/idea-gdba13e8a8_1920.jpg");
+            }
+        });
+
 
         //ritorno la risposta, in forma di json cos' da poterla usare all'interno del programma con axios
         return response()->json(
@@ -40,6 +52,15 @@ class PostController extends Controller
     public function show($slug){
 
         $post = Post::where('slug', '=', $slug)->with(['category', 'tags'])->first();
+
+
+        if($post->cover){ 
+            $post->cover = url("storage/" . $post->cover);
+        }else{
+            $post->cover = url("img/idea-gdba13e8a8_1920.jpg");
+        }
+
+        
 
         if ($post) {
             return response()->json(

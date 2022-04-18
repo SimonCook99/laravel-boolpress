@@ -4,6 +4,7 @@
             <div class="col-12">
                 <div v-if="post">
                     <h1>{{post.title}}</h1>
+                    <img class="img-fluid" :src="post.cover" :alt="post.title">
                     <p>{{post.content}}</p>
 
                     <h3 v-if="post.category">Categoria: {{post.category.name}}</h3>

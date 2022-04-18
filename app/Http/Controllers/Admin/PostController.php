@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Post;
 use App\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -52,11 +53,22 @@ class PostController extends Controller
                 "title" => "required|min:5",
                 "content" => "required|min:10",
                 "category_id" => "nullable|exists:categories,id",
-                "tags" => "nullable|exists:tags,id"
+                "tags" => "nullable|exists:tags,id",
+                "image" => "nullable|image|max:2048" //nel caso di image, max si riferisce al massimo di KB del file (in questo caso 2 MB)
             ]
         );
 
         $data = $request->all();
+
+
+        if(isset($data["image"])){
+
+            //crea una sottocartella 'post_covers' in 'storage/app/public'
+            $cover_path= Storage::put("post_covers", $data["image"]);
+            $data["cover"] = $cover_path;
+
+        }
+        
 
         $slug = Str::slug($data["title"]);
         $counter = 1;
@@ -119,11 +131,26 @@ class PostController extends Controller
                 "title" => "required|min:5",
                 "content" => "required|min:10",
                 "category_id" => "nullable|exists:categories,id",
-                "tags" => "nullable|exists:tags,id"
+                "tags" => "nullable|exists:tags,id",
+                "image" => "nullable|image|max:2048"
             ]
         );
 
         $data = $request->all();
+
+        //se l'utente ha caricato una nuova immagine nel form di update
+        if(isset($data["image"])){
+
+            //se c'era già un'immagine in precedenza, allora la cancello anche all'interno di storage
+            if($post->cover){
+                Storage::delete($post->cover);
+            }
+
+            //crea una sottocartella 'post_covers' in 'storage/app/public'
+            $cover_path= Storage::put("post_covers", $data["image"]);
+            $data["cover"] = $cover_path;
+
+        }
 
         $slug = Str::slug($data["title"]);
 
@@ -139,8 +166,12 @@ class PostController extends Controller
         $post->update($data);
         $post->save();
 
-        //sincronizzo i tag di quel post, con i tag che hanno gli ID indicati nel campo "tags" di $data
-        $post->tags()->sync($data["tags"]);
+
+        if(isset($data["tags"])){
+            //sincronizzo i tag di quel post, con i tag che hanno gli ID indicati nel campo "tags" di $data
+            $post->tags()->sync($data["tags"]);
+        }
+        
 
         return redirect()->route("admin.posts.index");
 
@@ -155,6 +186,11 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+
+        if($post->cover){
+            Storage::delete($post->cover);
+        }
+
         $post->delete();
         return redirect()->route("admin.posts.index");
     }

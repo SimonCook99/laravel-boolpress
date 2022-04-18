@@ -6,8 +6,18 @@
     <div class="container">
       <h1>Crea un nuovo post</h1>
 
-      <form method="POST" action="{{route("admin.posts.store")}}">
+      <!--L'attributo 'enctype' è necessario quando è coinvolto l'upload di qualsiasi file-->
+      <form method="POST" action="{{route("admin.posts.store")}}" enctype="multipart/form-data">
         @csrf
+
+        <div class="form-group">
+          <label for="image">Immagine di copertina</label>
+
+          <!--l'attributo name in questo caso specifico non ha diretto colegamento con l'attributo cover del database, quindi usiamo un nome diverso-->
+          <input class="form-control" type="file" id="image" name="image"> 
+
+        </div>
+
         <div class="form-group">
           <label for="title">Titolo post</label>
           <input type="text" class="form-control" id="title" name="title" value="{{old("title")}}">

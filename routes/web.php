@@ -31,6 +31,7 @@ Route::middleware("auth") //controllo di autenticazione gestito direttamente qui
 
 Route::get("{any?}", function(){
     return view("guests.home");
+    /* phpinfo(); */
 })->where("any", ".*");
 
 

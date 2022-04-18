@@ -4,6 +4,14 @@
     <div class="container">
         <div>
             <h1>Visualizza post</h1>
+
+            @if ($post->cover)
+                <img class="img-fluid" src="{{asset('storage/' . $post->cover)}}" alt="{{$post->title}}">
+            @else
+                <img class="img-fluid" src="{{asset('img/idea-gdba13e8a8_1920.jpg') }}" alt="fallback-image">
+            @endif
+            
+
             <h3>Titolo: {{$post->title}}</h3>
             <h3>Contenuto: {!! $post->content !!}</h3>
             <h3>Slug: {{$post->slug}}</h3>
