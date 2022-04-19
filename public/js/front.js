@@ -2037,8 +2037,39 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "Contact"
+  name: "Contact",
+  data: function data() {
+    return {
+      name: "",
+      email: "",
+      message: ""
+    };
+  },
+  methods: {
+    sendForm: function sendForm() {
+      axios.post("/api/contacts", {
+        "name": this.name,
+        "email": this.email,
+        "message": this.message
+      }).then(function (response) {
+        console.log(response);
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -2985,30 +3016,114 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "container" }, [
+    _c("h1", [_vm._v("I nostri contatti sono i seguenti")]),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        on: {
+          submit: function ($event) {
+            $event.preventDefault()
+            return _vm.sendForm.apply(null, arguments)
+          },
+        },
+      },
+      [
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "name" } }, [
+            _vm._v("Inserisci il tuo nome"),
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.name,
+                expression: "name",
+              },
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text", name: "name", id: "name" },
+            domProps: { value: _vm.name },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.name = $event.target.value
+              },
+            },
+          }),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "email" } }, [
+            _vm._v("Inserisci la tua mail"),
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.email,
+                expression: "email",
+              },
+            ],
+            staticClass: "form-control",
+            attrs: { type: "email", name: "email", id: "email" },
+            domProps: { value: _vm.email },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.email = $event.target.value
+              },
+            },
+          }),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "message" } }, [
+            _vm._v("Spiegaci perchè ci stai contattando"),
+          ]),
+          _vm._v(" "),
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.message,
+                expression: "message",
+              },
+            ],
+            staticClass: "form-control",
+            attrs: { id: "message", rows: "10", name: "message" },
+            domProps: { value: _vm.message },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.message = $event.target.value
+              },
+            },
+          }),
+        ]),
+        _vm._v(" "),
+        _c(
+          "button",
+          { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+          [_vm._v("Invia")]
+        ),
+      ]
+    ),
+  ])
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("h1", [_vm._v("I nostri contatti sono i seguenti")]),
-      _vm._v(" "),
-      _c("ul", [
-        _c("li", [_vm._v("Facebook")]),
-        _vm._v(" "),
-        _c("li", [_vm._v("Instagram")]),
-        _vm._v(" "),
-        _c("li", [_vm._v("Twitter")]),
-        _vm._v(" "),
-        _c("li", [_vm._v("Youtube")]),
-        _vm._v(" "),
-        _c("li", [_vm._v("TikTok")]),
-      ]),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

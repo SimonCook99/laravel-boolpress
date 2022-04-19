@@ -9,4 +9,9 @@ use Illuminate\Support\Facades\Route;
 Route::get("/posts", "Api\PostController@index");
 
 //www.miosito.it/api/posts/{slug} che varia in base al singolo post da mostrare
-route::get("/posts/{slug}", "Api\PostController@show");
+Route::get("/posts/{slug}", "Api\PostController@show");
+
+
+Route::post("/contacts", "Api\ContactController@store");
+
+
