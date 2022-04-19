@@ -19,7 +19,7 @@
                 <textarea class="form-control" id="message" rows="10" name="message" v-model="message"></textarea>
             </div>
 
-            <button class="btn btn-primary" type="submit">Invia</button>
+            <button class="btn btn-primary" type="submit" v-if="sendingLoading ? 'disabled' : 'enabled' ">{{sendingLoading ? 'Invio in corso' : 'Invia'}}</button>
 
         </form>
     </div>
@@ -32,16 +32,22 @@
             return {
                 name: "",
                 email: "",
-                message: ""
+                message: "",
+
+                sendingLoading: false //booleano per indicare se c'è il caricamento di una nuova email
             }
         },
         methods: {
             sendForm(){
+
+                this.sendingLoading = true;
+
                 axios.post("/api/contacts", {
                     "name" : this.name,
                     "email" : this.email,
                     "message" : this.message
                 }).then ( response =>{
+                    this.sendingLoading = false;
                     console.log(response);
                 })
             }

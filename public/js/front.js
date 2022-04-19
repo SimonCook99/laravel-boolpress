@@ -2056,16 +2056,22 @@ __webpack_require__.r(__webpack_exports__);
     return {
       name: "",
       email: "",
-      message: ""
+      message: "",
+      sendingLoading: false //booleano per indicare se c'è il caricamento di una nuova email
+
     };
   },
   methods: {
     sendForm: function sendForm() {
+      var _this = this;
+
+      this.sendingLoading = true;
       axios.post("/api/contacts", {
         "name": this.name,
         "email": this.email,
         "message": this.message
       }).then(function (response) {
+        _this.sendingLoading = false;
         console.log(response);
       });
     }
@@ -3114,11 +3120,13 @@ var render = function () {
           }),
         ]),
         _vm._v(" "),
-        _c(
-          "button",
-          { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-          [_vm._v("Invia")]
-        ),
+        (_vm.sendingLoading ? "disabled" : "enabled")
+          ? _c(
+              "button",
+              { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+              [_vm._v(_vm._s(_vm.sendingLoading ? "Invio in corso" : "Invia"))]
+            )
+          : _vm._e(),
       ]
     ),
   ])
