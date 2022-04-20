@@ -3218,13 +3218,14 @@ var render = function () {
           2
         ),
         _vm._v(" "),
-        (_vm.sendingLoading ? "disabled" : "enabled")
-          ? _c(
-              "button",
-              { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-              [_vm._v(_vm._s(_vm.sendingLoading ? "Invio in corso" : "Invia"))]
-            )
-          : _vm._e(),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary",
+            attrs: { type: "submit", disabled: _vm.sendingLoading },
+          },
+          [_vm._v(_vm._s(_vm.sendingLoading ? "Invio in corso" : "Invia"))]
+        ),
       ]
     ),
   ])

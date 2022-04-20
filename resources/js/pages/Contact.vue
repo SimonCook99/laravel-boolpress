@@ -37,7 +37,7 @@
 
             </div>
 
-            <button class="btn btn-primary" type="submit" v-if="sendingLoading ? 'disabled' : 'enabled' ">{{sendingLoading ? 'Invio in corso' : 'Invia'}}</button>
+            <button class="btn btn-primary" type="submit" :disabled='sendingLoading'>{{sendingLoading ? 'Invio in corso' : 'Invia'}}</button>
 
         </form>
     </div>
