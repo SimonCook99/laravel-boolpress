@@ -2050,6 +2050,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Contact",
   data: function data() {
@@ -2057,7 +2075,11 @@ __webpack_require__.r(__webpack_exports__);
       name: "",
       email: "",
       message: "",
-      sendingLoading: false //booleano per indicare se c'è il caricamento di una nuova email
+      success: false,
+      //booleano che indica se il messaggio è stato correttamente inviato, mostrando eventualmente un div di conferma in cima al form
+      sendingLoading: false,
+      //booleano per indicare se c'è il caricamento di una nuova email
+      errorsList: {} //oggetto che conterrà la lista degli errori presenti qualora l'invio non vada a buon fine
 
     };
   },
@@ -2071,7 +2093,18 @@ __webpack_require__.r(__webpack_exports__);
         "email": this.email,
         "message": this.message
       }).then(function (response) {
-        _this.sendingLoading = false;
+        _this.sendingLoading = false; //se ci sono degli errori, allora li inserisco nell'oggetto errors e li mostro nei paragrafi del form,
+        //altrimenti settiamo il success a true per indicare all'utente il corretto invio del messaggio, e infine resettiamo i campi
+
+        if (response.data.errors) {
+          _this.errorsList = response.data.errors;
+          _this.success = false;
+        } else {
+          _this.success = true;
+          _this.name = _this.email = _this.message = '';
+          _this.errors = {};
+        }
+
         console.log(response);
       });
     }
@@ -3025,6 +3058,14 @@ var render = function () {
   return _c("div", { staticClass: "container" }, [
     _c("h1", [_vm._v("I nostri contatti sono i seguenti")]),
     _vm._v(" "),
+    _vm.success
+      ? _c("div", { staticClass: "alert alert-success" }, [
+          _vm._v(
+            "\n        Email inviata con successo, grazie per averci contattato\n    "
+          ),
+        ])
+      : _vm._e(),
+    _vm._v(" "),
     _c(
       "form",
       {
@@ -3036,89 +3077,146 @@ var render = function () {
         },
       },
       [
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "name" } }, [
-            _vm._v("Inserisci il tuo nome"),
-          ]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.name,
-                expression: "name",
+        _c(
+          "div",
+          { staticClass: "form-group" },
+          [
+            _c("label", { attrs: { for: "name" } }, [
+              _vm._v("Inserisci il tuo nome"),
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.name,
+                  expression: "name",
+                },
+              ],
+              staticClass: "form-control",
+              class: { "is-invalid": _vm.errorsList.name },
+              attrs: { type: "text", name: "name", id: "name" },
+              domProps: { value: _vm.name },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.name = $event.target.value
+                },
               },
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text", name: "name", id: "name" },
-            domProps: { value: _vm.name },
-            on: {
-              input: function ($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.name = $event.target.value
-              },
-            },
-          }),
-        ]),
+            }),
+            _vm._v(" "),
+            _vm._l(_vm.errorsList.name, function (error, index) {
+              return _c(
+                "p",
+                { key: "error_name" + index, staticClass: "invalid-feedback" },
+                [
+                  _vm._v(
+                    "\n                " + _vm._s(error) + "\n            "
+                  ),
+                ]
+              )
+            }),
+          ],
+          2
+        ),
         _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "email" } }, [
-            _vm._v("Inserisci la tua mail"),
-          ]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.email,
-                expression: "email",
+        _c(
+          "div",
+          { staticClass: "form-group" },
+          [
+            _c("label", { attrs: { for: "email" } }, [
+              _vm._v("Inserisci la tua mail"),
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.email,
+                  expression: "email",
+                },
+              ],
+              staticClass: "form-control",
+              class: { "is-invalid": _vm.errorsList.email },
+              attrs: { type: "email", name: "email", id: "email" },
+              domProps: { value: _vm.email },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.email = $event.target.value
+                },
               },
-            ],
-            staticClass: "form-control",
-            attrs: { type: "email", name: "email", id: "email" },
-            domProps: { value: _vm.email },
-            on: {
-              input: function ($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.email = $event.target.value
-              },
-            },
-          }),
-        ]),
+            }),
+            _vm._v(" "),
+            _vm._l(_vm.errorsList.email, function (error, index) {
+              return _c(
+                "p",
+                { key: "error_email" + index, staticClass: "invalid-feedback" },
+                [
+                  _vm._v(
+                    "\n                " + _vm._s(error) + "\n            "
+                  ),
+                ]
+              )
+            }),
+          ],
+          2
+        ),
         _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "message" } }, [
-            _vm._v("Spiegaci perchè ci stai contattando"),
-          ]),
-          _vm._v(" "),
-          _c("textarea", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.message,
-                expression: "message",
+        _c(
+          "div",
+          { staticClass: "form-group" },
+          [
+            _c("label", { attrs: { for: "message" } }, [
+              _vm._v("Spiegaci perchè ci stai contattando"),
+            ]),
+            _vm._v(" "),
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.message,
+                  expression: "message",
+                },
+              ],
+              staticClass: "form-control",
+              class: { "is-invalid": _vm.errorsList.message },
+              attrs: { id: "message", rows: "10", name: "message" },
+              domProps: { value: _vm.message },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.message = $event.target.value
+                },
               },
-            ],
-            staticClass: "form-control",
-            attrs: { id: "message", rows: "10", name: "message" },
-            domProps: { value: _vm.message },
-            on: {
-              input: function ($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.message = $event.target.value
-              },
-            },
-          }),
-        ]),
+            }),
+            _vm._v(" "),
+            _vm._l(_vm.errorsList.message, function (error, index) {
+              return _c(
+                "p",
+                {
+                  key: "error_message" + index,
+                  staticClass: "invalid-feedback",
+                },
+                [
+                  _vm._v(
+                    "\n                " + _vm._s(error) + "\n            "
+                  ),
+                ]
+              )
+            }),
+          ],
+          2
+        ),
         _vm._v(" "),
         (_vm.sendingLoading ? "disabled" : "enabled")
           ? _c(
