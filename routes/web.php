@@ -26,6 +26,12 @@ Route::middleware("auth") //controllo di autenticazione gestito direttamente qui
     Route::resource("posts", "PostController");
 
     Route::resource("tags", "TagController");
+
+    //rotta per la vista di editing delle informazioni dell'utente
+    Route::get("user", "UserController@edit")->name("users.edit");
+
+    //metodo put per l'effettivo aggiornamento dei dati dell'utente nel database
+    Route::put("user", "UserController@update")->name("users.update");
 });
 
 
