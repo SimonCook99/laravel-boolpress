@@ -32,6 +32,9 @@ Route::middleware("auth") //controllo di autenticazione gestito direttamente qui
 
     //metodo put per l'effettivo aggiornamento dei dati dell'utente nel database
     Route::put("user", "UserController@update")->name("users.update");
+
+    //rotta per ricavare l'immagine del singolo utente, chimando un metodo apposito ce ritorna l'immagine qualora sia presente
+    Route::get("user/getAvatar", "UserController@getMyAvatar")->name("user.getAvatar");
 });
 
 

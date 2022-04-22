@@ -18,8 +18,11 @@
 
 
         @if ($user->avatar)
-          <p>Immagine attualmente presente:</p>
-          <img src="{{url(storage_path('app') . "/" . $user->avatar)}}" alt="{{$user->name}}">
+          <h2>Immagine attualmente presente:</h2>
+          <img src="{{route("admin.user.getAvatar")}}" alt="{{$user->name}}" class="img-fluid">
+
+          {{-- Ho provato cosi ma non funziona  --}}
+          {{-- <img src="{{url(storage_path('app') . "/" . $user->avatar)}}" alt="{{$user->name}}"> --}}
         @endif
 
 

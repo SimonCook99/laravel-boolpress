@@ -51,4 +51,28 @@ class UserController extends Controller
 
 
     }
+
+    
+    public function getMyAvatar() {
+
+        $user = Auth::user();
+
+        if ($user) {
+            
+            
+            if ($user->avatar) {
+
+                //return Storage::disk('local')->download($user->avatar); // soluzione per un download forzato del file
+
+                return response()->file(storage_path('app') . '/' . $user->avatar); //soluzione per uno stream del file (si apre nel browser)
+            
+            } else {
+                abort(404); //se l'utente loggato non ha l'immagine, allora torno un errore di risorsa non trovata
+            }
+
+        } else { //se l'utente non è loggato, allora non è autorizzato ad accedere alla risorsa
+            abort(403);
+        }
+
+    }
 }
